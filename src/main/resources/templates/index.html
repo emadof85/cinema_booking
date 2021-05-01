@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="a.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<form class="mm" action="" method="post"  onsubmit="return validate()">
+    <div style="border: solid;">
+        <h1  style="text-align:center">Ordering cinema tickets </h1>
+        <div class="container">
+            <label for="movies"><b> select movie: </b></label>
+            <select id="movies" >
+                <option value="notselected">please select movie</option>
+                <option value="Shadow in the Cloud">Shadow in the Cloud</option>
+                <option value="The White Tige">The White Tiger</option>
+                <option value="Locked Down">Locked Down</option>
+                <option value="The Dig">The Dig</option>
+                <option value="Outside the Wire">Outside the Wire</option>
+                <option value="The Marksman">The Marksman</option>
+                <option value="American Skin">American Skin</option>
+                <option value="Don't Tell a Soul">Don't Tell a Soul</option>
+                <option value="Our Friend">Our Friend</option>
+                <option value="No Man's Land">No Man's Land</option>
+
+            </select>
+
+
+
+            <span id="movieCkeck"  style="display:none"class="invalid"  > <b>movie is selected </b> </span>
+
+
+            </br><b>Number:</b>
+            <input type="text"  id="unumber" name="unumber" title="this field isnot empty and between 1 and 100" required>
+            <span id="numberCkeck"  style="display:none"  class="invalid">   <b>number isnot empty and should be between 1 and 100</b> </span></br>
+            <label for="uname"><b>First Name:</b></label>
+            <span><input type="text"  id="uname" name="uname" title="this field isnot empty" required></span>
+            <span id="nameCheck" style="display:none" class="invalid">  <b>Name isnot empty</b> </span></br>
+            <label for="usurname"><b> Surname:</b></label>
+            <span> <input type="text"  id="usurname" name="usurname" title="this field isnot empty" required> </span>
+            <span id="surnameCheck" style="display:none"  class="invalid"> <b> surname isnot empty </b></span></br>
+
+            <label for="utelephonenumber"><b> Telephone number:  </b></label>
+            <span><input type="text"  id="utelephonenumber" name="utelephonenumber" title="this field isnot empty and contain just numbers " required></span>
+            <span id="telephonenumberCheck" style="display:none" class="invalid"> <b> telephone number isnot empty and contain just numbers </b></spanp></span></br>
+            <label for="uemail"><b> Email:</b></label>
+            <span><input type="text"  id="uemail" name="uemail" title="this field isnot empty valid email" required>
+<p id="emailCheck" style="display:none" class="invalid"> <b> email  isnot empty and valid email </b></p></span></br>
+
+
+            <input class="addbtn" type="button" value="Buy a ticket" onclick="showAllTicket()">
+            <h2>All ticket</h2>
+
+            <div id="display" style="width:300px;height:100px"></div>
+
+            <input class="cancelbtn" type="button" value="Delete all ticket" onclick="DeletAllTicket()">
+
+        </div >
+    </div >
+</form>
+
+
+
+</br>
+
+</form>
+<a href="/hello"> click here</a>
+<script >
+    var movie=document.getElementById("movies");
+    var Digit = document.getElementById("unumber");
+    var Name = document.getElementById("uname");
+    var SurName = document.getElementById("usurname");
+    var TelephoneNumber = document.getElementById("utelephonenumber");
+    var Email= document.getElementById("uemail");
+    AllTicket=document.getElementById("display");
+    var Tickets=[];
+    var result = "";
+
+
+
+
+    movie.onchange=function () {
+// Validate We Choose a movie
+        var IsValid =true;
+        if(movie.value=="notselected") {
+            movieCkeck.classList.remove("valid");
+            movieCkeck.classList.add("invalid");
+            movieCkeck.style.display="inline-block";
+            IsValid=false;
+        } else {
+            movieCkeck.classList.remove("invalid");
+            movieCkeck.classList.add("valid");
+            movieCkeck.style.display="inline-block";
+            IsValid =true;
+        }
+        return IsValid;
+    }
+
+
+
+
+    ///============================validate number====================////
+    Digit.onkeyup = function() {
+        // Validate Name isn't empty
+        var IsValid =true;
+        var numbers = /[0-9]/g;
+        if(Digit.value.length > 0 &&  Digit.value>1 && Digit.value < 100) {
+            numberCkeck.classList.remove("invalid");
+            numberCkeck.classList.add("valid");
+            numberCkeck.style.display="inline-block";
+            IsValid =true;
+        } else {
+            numberCkeck.classList.remove("valid");
+            numberCkeck.classList.add("invalid");
+            numberCkeck.style.display="inline-block";
+            IsValid =false;
+        }
+        return IsValid;
+    }
+    ///============================validate name====================////
+    Name.onkeyup = function() {
+        // Validate Name isn't empty
+        var IsValid =true;
+        if(Name.value.length > 0) {
+            nameCheck.classList.remove("invalid");
+            nameCheck.classList.add("valid");
+            nameCheck.style.display="inline-block";
+            IsValid =true;
+        } else {
+            nameCheck.classList.remove("valid");
+            nameCheck.classList.add("invalid");
+            nameCheck.style.display="inline-block";
+            IsValid =false;
+        }
+        return IsValid;
+    }
+    ////============================validate surname====================////
+    SurName.onkeyup = function() {
+        // Validate surName isn't empty
+        var IsValid =true;
+        if(SurName.value.length > 0) {
+            surnameCheck.classList.remove("invalid");
+            surnameCheck.classList.add("valid");
+            surnameCheck.style.display="inline-block";
+            IsValid =true;
+        } else {
+            surnameCheck.classList.remove("valid");
+            surnameCheck.classList.add("invalid");
+            surnameCheck.style.display="inline-block";
+            IsValid =false;
+        }
+        return IsValid;
+    }
+    ////============================validate telephone number====================////
+    TelephoneNumber.onkeyup = function(){
+        // Validate TelephoneNumber isnot empty and just contain  number
+        var numbers = /[0-9]/g;
+        var IsValid =true;
+        if( TelephoneNumber.value.length>0 && TelephoneNumber.value.match(numbers)) {
+            telephonenumberCheck.classList.remove("invalid");
+            telephonenumberCheck.classList.add("valid");
+            telephonenumberCheck.style.display="inline-block";
+            IsValid =true;
+        } else {
+            telephonenumberCheck.classList.remove("valid");
+            telephonenumberCheck.classList.add("invalid");
+            telephonenumberCheck.style.display="inline-block";
+            var IsValid =false;
+        }
+        return IsValid;
+    }
+    ////============================validate email====================////
+    Email.onkeyup = function() {
+        // Validate email  isn't empty && valid email
+        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        var IsValid =true;
+        if(Email.value.length > 0 && Email.value.match(mailformat))  {
+            emailCheck.classList.remove("invalid");
+            emailCheck.classList.add("valid");
+            emailCheck.style.display="bloke";
+            IsValid =true;
+        } else {
+            emailCheck.classList.remove("valid");
+            emailCheck.classList.add("invalid");
+            emailCheck.style.display="inline-block";
+            IsValid =false;
+        }
+        return IsValid;
+    }
+
+    function showAllTicket()
+    {
+        if (movie.onchange()  &&   Digit.onkeyup() && Name.onkeyup() && SurName.onkeyup() && TelephoneNumber.onkeyup() && Email.onkeyup() )
+        {
+            var movies = $("#movies").val();
+            var unumber = $("#unumber").val();
+            var uname = $("#uname").val();
+            var usurname = $("#usurname").val();
+            var utelephonenumber = $("#utelephonenumber").val();
+            var uemail = $("#uemail").val();
+            $.post('/api/CinemaTicket/ticket', {
+                movie_name: movies,
+                Ticket_number: unumber,
+                first_name: uname,
+                sur_name: usurname,
+                phone_number: utelephonenumber,
+                email: uemail
+            }, function ()
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/CinemaTicket/ticket',
+                    datatype: 'text',
+                    success: function (data) {
+                        console.log(data);
+                        let ut = "<table><tr><th>MovieName:</th><th>NumberOfTicket:</th><th>FirstName:</th><th>SurName:</th><th>TelephoneNumber:</th><th>Email:</th></tr>";
+
+                        for (var a of data) {
+                            ut += "<tr><td>" + a.movie_name + "</td><td>" + a.Ticket_number + "</td><td>" + a.first_name + "</td><td>" + a.sur_name + "</td><td>" + a.phone_number + "</td><td>" + a.email + "</td></tr>";
+                        }
+                        ut += "</table>";
+                        $("#display").html(ut);
+
+                    }
+                });
+            })
+
+            movie.value = "";
+            Digit.value = "";
+            Name.value = "";
+            SurName.value = "";
+            TelephoneNumber.value = "";
+            Email.value = "";
+            movieCkeck.classList.remove("valid");
+            movieCkeck.classList.add("invalid");
+            numberCkeck.classList.remove("valid");
+            numberCkeck.classList.add("invalid");
+            nameCheck.classList.remove("valid");
+            nameCheck.classList.add("invalid");
+            surnameCheck.classList.remove("valid");
+            surnameCheck.classList.add("invalid");
+            telephonenumberCheck.classList.remove("valid");
+            telephonenumberCheck.classList.add("invalid");
+            emailCheck.classList.remove("valid");
+            emailCheck.classList.add("invalid");
+            movieCkeck.style.display = "none";
+            numberCkeck.style.display = "none";
+            nameCheck.style.display = "none";
+            surnameCheck.style.display = "none";
+            telephonenumberCheck.style.display = "none";
+            emailCheck.style.display = "none";
+            movie.value = "notselected";
+
+
+        }
+    }
+
+
+
+
+
+    function DeletAllTicket()
+    {
+        $.ajax({
+            type: 'Delete',
+            url: '/api/CinemaTicket/ticket',
+            success:function ()
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/CinemaTicket/ticket',
+                    datatype: 'text',
+                    success: function (data) {
+                        console.log(data);
+                        let ut = "<table><tr><th>MovieName:</th><th>NumberOfTicket:</th><th>FirstName:</th><th>SurName:</th><th>TelephoneNumber:</th><th>Email:</th></tr>";
+
+                        for (var a of data) {
+                            ut += "<tr><td>" + a.movie_name + "</td><td>" + a.Ticket_number + "</td><td>" + a.first_name + "</td><td>" + a.sur_name + "</td><td>" + a.phone_number + "</td><td>" + a.email + "</td></tr>";
+                        }
+                        ut += "</table>";
+                        $("#display").html(ut);
+
+                    }
+                });
+            }
+        });
+        AllTicket.value="";
+        movieCkeck.style.display="none";
+        numberCkeck.style.display="none";
+        nameCheck.style.display="none";
+        surnameCheck.style.display="none";
+        telephonenumberCheck.style.display="none";
+        emailCheck.style.display="none";
+    }
+
+
+</script>
+
+
+</body>
+</html>
